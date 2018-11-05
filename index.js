@@ -3,19 +3,20 @@ let Keys = {
     up: false,
     left: false,
     right: false,
-    down: false,
-    spaceBar: false
+    down: false
 };
 
 //When the user presses a key it updates the Keys object
 $(document).bind('keydown', (e) => {
     let c = e.keyCode;
 
+    //If space bar pressed, the unicorn does a magnificent jump, what an unicorn !
+    if (c === 32) Unicorn.jump();
+
     if (c === 37) Keys.left = true;
     if (c === 38) Keys.up = true;
     if (c === 39) Keys.right = true;
     if (c === 40) Keys.down = true;
-    if (c === 32) Keys.spaceBar = false;
 });
 
 $(document).bind('keyup', (e) => {
@@ -25,14 +26,13 @@ $(document).bind('keyup', (e) => {
     if (c === 38) Keys.up = false;
     if (c === 39) Keys.right = false;
     if (c === 40) Keys.down = false;
-    if (c === 32) Keys.spaceBar = false;
 });
 
 //Every 20 ms, the Keys object is sent to the move method
-function main() {
-    if (Keys.spaceBar) Unicorn.jump();
-    else Unicorn.move(Keys);
-}
+const main = () => {
+    //if (Keys.spaceBar) Unicorn.jump();
+    Unicorn.move(Keys);
+};
 
 setInterval(main, 20);
 
@@ -48,7 +48,7 @@ class Unicorn {
         }
         //Down arrow
         //And the unicorn didn't get through the bottom border
-        if (Keys.down) {
+        if (Keys.down && tLU.css('top').substring(0, tLU.css('top').length - 2) < $(window).height() - 29) {
             tLU.attr('class', 'front');
             tLU.css({top: parseInt(tLU.css('top')) + 10});
         }
@@ -60,13 +60,24 @@ class Unicorn {
         }
         //Right arrow
         //And the unicorn didn't get through the right border
-        if (Keys.right) {
+        if (Keys.right && tLU.css('left').substring(0, tLU.css('left').length - 2) < $(window).width() - 23) {
             tLU.attr('class', 'right');
             tLU.css({left: parseInt(tLU.css('left')) + 10});
         }
     }
+
     static jump() {
-        return 'oui'
+        $('#the-little-unicorn').animate({
+            height: '40px',
+            width: '34px',
+            backgroundSize: '34px'
+        }, 300, () => {
+            $('#the-little-unicorn').animate({
+                height: '29px',
+                width: '23px',
+                backgroundSize: '23px'
+            })
+        })
     }
 }
 
