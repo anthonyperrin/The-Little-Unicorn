@@ -48,7 +48,7 @@ class Unicorn {
         }
         //Down arrow
         //And the unicorn didn't get through the bottom border
-        if (Keys.down && tLU.css('top').substring(0, tLU.css('top').length - 2) < $(window).height() - 29) {
+        if (Keys.down && tLU.css('top').substring(0, tLU.css('top').length - 2) < $(window).height() - 32) {
             tLU.attr('class', 'front');
             tLU.css({top: parseInt(tLU.css('top')) + 10});
         }
@@ -60,7 +60,7 @@ class Unicorn {
         }
         //Right arrow
         //And the unicorn didn't get through the right border
-        if (Keys.right && tLU.css('left').substring(0, tLU.css('left').length - 2) < $(window).width() - 23) {
+        if (Keys.right && tLU.css('left').substring(0, tLU.css('left').length - 2) < $(window).width() - 28) {
             tLU.attr('class', 'right');
             tLU.css({left: parseInt(tLU.css('left')) + 10});
         }
